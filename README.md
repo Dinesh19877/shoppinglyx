@@ -25,16 +25,11 @@ This is a Django-based web application that features product management, user au
 First, clone this repository to your local machine using the following command:
 
 ```bash
-git clone https://github.com/Dinesh19877/E-commerce-System
+git clone https://github.com/Dinesh19877/shoppinglyx
 ```
 
-### 2. **Navigate to the project directory**
 
-```bash
-cd E-commerce-System
-```
-
-### 3. **Create a Virtual Environment**
+### 2. **Create a Virtual Environment**
 
 Set up a virtual environment for Python dependencies:
 
@@ -55,7 +50,7 @@ Activate the virtual environment:
 
 
 
-### 4. **Set up the Database**
+### 3. **Set up the Database**
 
 Apply migrations to create the necessary database tables:
 
@@ -64,7 +59,7 @@ python manage.py makemigrations
 python manage.py migrate
 ```
 
-### 5. **Create a Superuser (for Admin access)**
+### 4. **Create a Superuser (for Admin access)**
 
 Create a superuser to access the Django admin interface:
 
@@ -72,7 +67,7 @@ Create a superuser to access the Django admin interface:
 python manage.py createsuperuser
 ```
 
-### 6. **Run the Development Server**
+### 5. **Run the Development Server**
 
 Start the Django development server to run the application locally:
 

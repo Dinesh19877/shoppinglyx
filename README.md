@@ -5,7 +5,7 @@ This is a Django-based web application that features product management, user au
 
 ## **Features**
 
-- **User Authentication**: Secure login and registration system.
+- **User Authentication**: Secure login and registration system. 
 - **Product Management**: Add, update, delete, and manage products.
 - **Add to Cart**: Add products to the cart and dynamically update the cart.
 - **Payment Processing**: Simple payment system to handle transactions.

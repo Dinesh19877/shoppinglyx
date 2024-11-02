@@ -1,0 +1,95 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Buy Now{% endblock title %}
+{% block main-content %}
+<div class="container">
+ <div class="row mt-5">
+  <div class="col-sm-6">
+    <h4>Order Summary</h4>
+    <hr>
+    {% for item in cart_item %}
+      <div class="card mb-2">
+        <div class="card-body">
+          <h5>Product: Product {{item.product.title}}</h5>
+          <p>Quantity: {{item.quantiy}}</p>
+          <p class="fw-bold"> Price  : {{item.total_cost}}</p>
+        </div>
+      </div>
+      {% endfor %}
+      <p class="fw-bold"> Total Price + Rs. 100 : {{totalamt}}</p>
+    <small>Term and Condition: Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, ullam saepe! Iure optio repellat dolor velit, minus rem. Facilis cumque neque numquam laboriosam, accusantium adipisci nisi nihil in et quis?</small>
+  </div>
+  <div class="col-sm-4 offset-sm-1">
+    <h4>Select Shipping Address</h4>
+    <hr>
+    <form action="/paymentdone">
+      {% for ad in add  %}
+      <div class="card">
+        <div class="card-body">
+        <h5>{{ad.name}}</h5>
+        <p>{{ad.localtiy}},{{ad.city}},{{ad.state}} - {{ad.zipcode}}</p>
+        </div>
+      </div>
+        <div class="form-check mt-2 mb-5">
+          <input class="form-check-input" type="radio" value="{{ad.id}}" name="custid" id="custid{{forloop.counter}}">
+          <label class="form-check-label fw-bold" for="">
+            Address:{{forloop.counter}} </label>
+        </div>
+        {% endfor %}
+      
+
+        <div id="paypal-button-container"></div>
+
+
+
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock main-content %}
+{% block payment %}
+  <script src="https://www.paypal.com/sdk/js?client-id=AfgcHzKhVuUzFxpUN9zsfe9YX24BItjMN15M2rOUxe7j6ugRor7ybiBjRgL680GxLFEzghmjjwsC90DgJ&currency=USD"></script>
+  <script>
+    function initPayPalButton() {
+      paypal.Buttons({
+        style: {
+          shape: 'rect',
+          color: 'gold',
+          layout: 'vertical',
+          label: 'paypal',
+        },
+  
+        createOrder: function(data, actions) {
+          return actions.order.create({
+            purchase_units: [{
+              amount: {
+                currency_code: "USD",
+                value: {{ totalamt }} // Ensure this is properly set
+              }
+            }]
+          });
+        },
+  
+        onApprove: function(data, actions) {
+          return actions.order.capture().then(function(orderData) {
+            console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+  
+            // Show a success message within this page
+            const element = document.getElementById('paypal-button-container');
+            element.innerHTML = '<h3>Thank you for your payment!</h3>';
+            
+            // Optional: Redirect to thank you page
+            // window.location.href = 'thank_you.html';
+          });
+        },
+  
+        onError: function(err) {
+          console.error('PayPal Checkout onError', err);
+          const element = document.getElementById('paypal-button-container');
+          element.innerHTML = '<h3>There was an error processing your payment. Please try again.</h3>';
+        }
+      }).render('#paypal-button-container');
+    }
+    initPayPalButton();
+  </script>
+  {% endblock payment %}
